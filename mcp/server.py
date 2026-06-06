@@ -31,6 +31,8 @@ async def root():
     except Exception as e:
         return HTMLResponse(content=f"Error reading report: {str(e)}", status_code=500)
 
+    from datetime import datetime
+    last_updated = datetime.now().strftime("%d %b %Y, %I:%M %p")
     site_name = data.get("site", "Unknown Site")
     urls_crawled = data.get("urls_crawled", 0)
     severity_counts = data.get("summary", {}).get("by_severity", {})
@@ -72,9 +74,20 @@ async def root():
                 .sev-medium {{ color: #dd6b20; font-weight: bold; }}
                 .sev-low {{ color: #38a169; font-weight: bold; }}
             </style>
+        <script>
+            setInterval(function() {{
+                fetch('/status').then(function(r) {{ return r.json(); }}).then(function(data) {{
+                    var el = document.getElementById('pipeline-status');
+                    if (el) el.innerText = 'Pipeline: ' + data.message + ' (Stage ' + data.stage + '/' + data.total_stages + ')';
+                    if (data.stage === 5) location.reload();
+                }});
+            }}, 2000);
+        </script>
         </head>
         <body>
             <div class="container">
+                <p style="color:#888;font-size:0.85rem;margin-bottom:10px;">Last updated: {last_updated}</p>
+                <div id="pipeline-status" style="background:#e8f5e9;padding:10px;border-radius:6px;margin-bottom:20px;font-weight:bold;color:#2e7d32;">Pipeline: Ready</div>
                 <h1>SEO Report: {site_name}</h1>
 
                 <div class="stats-grid">
@@ -130,6 +143,14 @@ async def get_report():
             return json.load(f)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error reading report: {str(e)}")
+
+@app.get("/status")
+async def get_status():
+    status_path = PROJECT_ROOT / "outputs" / "status.json"
+    if not status_path.exists():
+        return {"stage": 0, "message": "Pipeline not started", "total_stages": 5}
+    with open(status_path) as f:
+        return json.load(f)
 
 @app.get("/health")
 async def health_check():

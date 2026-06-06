@@ -28,6 +28,11 @@ def main():
     csv_path = os.path.join(export_dir, "internal_all.csv")
     start = time.time()
 
+    import json as _json
+    def _write_status(stage, message):
+        with open(OUTPUTS_DIR / "status.json", "w") as _f:
+            _json.dump({"stage": stage, "message": message, "total_stages": 5}, _f)
+
     print("Stage 1: Loading CSV...")
     try:
         df = load_csv(csv_path)
@@ -46,10 +51,12 @@ def main():
     print(f"  Found {summary['total_issues']} issues")
 
     print("Stage 3: Prioritizing...")
+    _write_status(3, "Stage 3 complete: issues prioritized")
     severity_order = {"High": 0, "Medium": 1, "Low": 2}
     grouped.sort(key=lambda x: severity_order.get(x["severity"], 3))
 
     print("Stage 4: Generating fixes (capped at 20 URLs)...")
+    _write_status(4, "Stage 4 in progress: generating AI fixes...")
     OUTPUTS_DIR.mkdir(exist_ok=True)
 
     titles_fixes = []
@@ -78,6 +85,7 @@ def main():
             redirect_map.append({"from": issue["url"], "to": issue["url"].rstrip("/"), "reason": "301/302 redirect - update internal links to final destination"})
 
     print("Stage 5: Writing report...")
+    _write_status(5, "Stage 5 complete: report written")
     duration = round(time.time() - start, 1)
     # Actionable recommendations mapping
     RECS = {

@@ -49,3 +49,6 @@ redirect_map was pulling 404 broken images with empty destinations. Changed to p
 
 ## 2026-06-06 16:15 — run.py
 titles_fixes was including image and CSS URLs. Added text/html content type filter before rewrite_title call. report.schema.json copied from starter bundle, report.json validated VALID.
+
+## 2026-06-06 17:05 — mcp/server.py + run.py
+Dashboard was static - loaded report.json once on page load. Added status.json polling every 2 seconds so dashboard visibly updates during pipeline run. Added last updated timestamp. Auto-reloads when stage 5 completes.
