@@ -75,26 +75,30 @@ def detect(df: pd.DataFrame) -> list:
         inlinks = row.get(col_inlinks)
 
         # Rule definitions
+        is_html = 'text/html' in str(row.get('Content Type', '')).lower()
+        is_indexable_200 = indexability == 'Indexable' and status == 200
+        is_image = 'image' in str(row.get('Content Type', '')).lower()
+
         checks = [
-            ("missing_title", (indexability == 'Indexable' and status == 200) and not title, "Page is missing a title tag"),
-            ("duplicate_title", (indexability == 'Indexable' and status == 200) and (title and title in dup_titles), f"Duplicate title: {title}"),
+            ("missing_title", is_indexable_200 and is_html and not title, "Page is missing a title tag"),
+            ("duplicate_title", is_indexable_200 and is_html and title and title in dup_titles, f"Duplicate title: {title}"),
             ("broken_link", isinstance(status, (int, float)) and 400 <= status < 500, f"Broken link with status {status}"),
             ("server_error", isinstance(status, (int, float)) and status >= 500, f"Server error with status {status}"),
             ("redirect_chain", row.get(col_chain) if col_chain in df.columns else False, "Page is part of a redirect chain"),
             ("redirect_loop", row.get(col_loop) if col_loop in df.columns else False, "Page is in a redirect loop"),
-            ("title_too_long", len(title) > 60 or float(row.get('Title 1 Pixel Width', 0) if pd.notnull(row.get('Title 1 Pixel Width')) else 0) > 561, f"Title length ({len(title)}) or width ({row.get('Title 1 Pixel Width', 0)}) exceeds limits"),
-            ("missing_meta_description", (indexability == 'Indexable' and status == 200) and not meta, "Meta description is missing"),
-            ("duplicate_meta_description", (indexability == 'Indexable' and status == 200) and (meta and meta in dup_metas), "Duplicate meta description detected"),
-            ("missing_h1", not h1, "H1 tag is missing"),
-            ("redirect", isinstance(status, (int, float)) and status in [301, 302], f"Page is a redirect ({status})"),
-            ("missing_image_alt", (str(row.get('Content Type', '')).lower().find('image') != -1) and not title, "Image missing alt text"),
-            ("orphan_page", status == 200 and isinstance(inlinks, (int, float)) and inlinks == 0, "Page has 0 inlinks (orphan page)"),
-            ("non_indexable_but_linked", status == 200 and indexability != "Indexable", f"Page is non-indexable ({indexability}) but present in crawl"),
-            ("canonical_mismatch", canonical and canonical != url, f"Canonical mismatch: {canonical}"),
-            ("title_too_short", title and len(title) < 30, f"Title length ({len(title)}) is too short (below 30)"),
-            ("meta_description_too_long", meta and len(meta) > 155, f"Meta description length ({len(meta)}) exceeds 155 characters"),
-            ("duplicate_h1", h1 and h1 in dup_h1s, f"Duplicate H1 detected: {h1}"),
-            ("thin_content", isinstance(words, (int, float)) and words < 200, f"Thin content: only {words} words"),
+            ("title_too_long", is_indexable_200 and is_html and (len(title) > 60 or float(row.get('Title 1 Pixel Width', 0) if pd.notnull(row.get('Title 1 Pixel Width')) else 0) > 561), f"Title length ({len(title)}) or width ({row.get('Title 1 Pixel Width', 0)}) exceeds limits"),
+            ("missing_meta_description", is_indexable_200 and is_html and not meta, "Meta description is missing"),
+            ("duplicate_meta_description", is_indexable_200 and is_html and meta and meta in dup_metas, "Duplicate meta description detected"),
+            ("missing_h1", is_html and status == 200 and not h1, "H1 tag is missing"),
+            ("redirect", isinstance(status, (int, float)) and 300 <= status < 400, f"Page is a redirect ({status})"),
+            ("missing_image_alt", is_image and not row.get('Alt Text', row.get('Img Alt Text', '')), "Image missing alt text"),
+            ("orphan_page", is_indexable_200 and is_html and isinstance(inlinks, (int, float)) and inlinks == 0, "Page has 0 inlinks (orphan page)"),
+            ("non_indexable_but_linked", indexability != "Indexable" and isinstance(inlinks, (int, float)) and inlinks > 0, f"Page is non-indexable ({indexability}) but present in crawl"),
+            ("canonical_mismatch", is_html and canonical and canonical != url, f"Canonical mismatch: {canonical}"),
+            ("title_too_short", is_indexable_200 and is_html and title and len(title) < 30, f"Title length ({len(title)}) is too short (below 30)"),
+            ("meta_description_too_long", is_indexable_200 and is_html and meta and len(meta) > 155, f"Meta description length ({len(meta)}) exceeds 155 characters"),
+            ("duplicate_h1", is_html and h1 and h1 in dup_h1s, f"Duplicate H1 detected: {h1}"),
+            ("thin_content", is_indexable_200 and is_html and isinstance(words, (int, float)) and words < 200, f"Thin content: only {words} words"),
             ("slow_page", isinstance(resp_time, (int, float)) and resp_time > 1.0, f"Page response time is slow: {resp_time}ms"),
         ]
 

@@ -61,6 +61,9 @@ def main():
             url = issue["url"]
             row = df[df["Address"] == url]
             if not row.empty:
+                content_type = str(row.iloc[0].get("Content Type", "")).lower()
+                if "text/html" not in content_type:
+                    continue
                 old_title = str(row.iloc[0].get("Title 1", "")) if "Title 1" in row.columns else ""
                 new_title = rewrite_title(url, old_title)
                 if new_title:

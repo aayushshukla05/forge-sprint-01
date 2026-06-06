@@ -1,9 +1,48 @@
 {
   "hooks": {
-    "PostToolUse": [{"matcher": "", "hooks": [{"type": "command", "command": "echo done"}]}],
-    "PreToolUse": [{"matcher": "", "hooks": [{"type": "command", "command": "echo ready"}]}],
-    "SessionStart": [{"matcher": "", "hooks": [{"type": "command", "command": "echo start"}]}],
-    "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "echo stop"}]}],
-    "UserPromptSubmit": [{"matcher": "", "hooks": [{"type": "command", "command": "echo prompt"}]}]
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/AayushShukla/Desktop/seo-command-center/.claude/hooks/audit.sh session_start Claude SessionStart success Claude Code session started"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/AayushShukla/Desktop/seo-command-center/.claude/hooks/audit.sh tool_use Edit project-files success model edited file"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/AayushShukla/Desktop/seo-command-center/.claude/hooks/audit.sh session_stop Claude Stop success Claude Code session ended"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/AayushShukla/Desktop/seo-command-center/.claude/hooks/audit.sh user_prompt Claude UserPromptSubmit success user submitted prompt"
+          }
+        ]
+      }
+    ]
   }
 }

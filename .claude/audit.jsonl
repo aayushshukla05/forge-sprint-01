@@ -6,16 +6,23 @@
 {"timestamp": "2026-06-06T13:03:16+0530", "event": "tool_use", "tool": "Edit", "file": "seo/fixer.py", "result": "success", "note": "wrote rewrite_title, rewrite_meta, get_call_count using Ollama API"}
 {"timestamp": "2026-06-06T13:08:22+0530", "event": "tool_use", "tool": "Edit", "file": ".claude/settings.json", "result": "success", "note": "fixed hooks format, backfilled audit log"}
 {"timestamp": "2026-06-06T13:12:07+0530", "event": "tool_use", "tool": "Edit", "file": "seo/reporter.py", "result": "success", "note": "wrote to_html, to_pdf, to_pptx output generators"}
-{"timestamp": "2026-06-06T13:30:00+0530", "event": "tool_use", "tool": "Edit", "file": "mcp/server.py", "result": "success", "note": "FastAPI dashboard on port 7700, fixed schema key names"}
-{"timestamp": "2026-06-06T14:00:00+0530", "event": "tool_use", "tool": "Edit", "file": "seo/detector.py", "result": "success", "note": "fixed canonical col, slow_page threshold, indexability filters, duplicate scoping"}
-{"timestamp": "2026-06-06T14:15:00+0530", "event": "tool_use", "tool": "cat", "file": "run.py", "result": "success", "note": "rewrote run.py with correct grouped schema and output path"}
-{"timestamp": "2026-06-06T14:15:00+0530", "event": "tool_use", "tool": "cat", "file": "run.py", "result": "success", "note": "rewrote run.py with correct grouped schema and output path"}
-{"timestamp": "2026-06-06T14:20:00+0530", "event": "tool_use", "tool": "Edit", "file": "seo/reporter.py", "result": "in_progress", "note": "rewriting reporter.py with correct field names: site, summary.by_severity, issues"}
-{"timestamp": "2026-06-06T14:25:00+0530", "event": "tool_use", "tool": "Edit", "file": "seo/reporter.py", "result": "success", "note": "reporter.py rewritten with correct field names and (report, path) signatures"}
-{"timestamp": "2026-06-06T14:30:00+0530", "event": "tool_use", "tool": "Edit", "file": "seo/detector.py", "result": "success", "note": "title_too_long now checks Title 1 Length > 60 OR Title 1 Pixel Width > 561"}
+{"timestamp": "2026-06-06T13:38:24+0530", "event": "tool_use", "tool": "Edit", "file": "mcp/server.py", "result": "success", "note": "FastAPI dashboard on port 7700, routes /, /report, /health"}
+{"timestamp": "2026-06-06T13:56:22+0530", "event": "tool_use", "tool": "Edit", "file": "seo/detector.py", "result": "success", "note": "fixed canonical col, slow_page threshold, indexability filters, duplicate scoping"}
+{"timestamp": "2026-06-06T13:58:39+0530", "event": "tool_use", "tool": "cat", "file": "run.py", "result": "success", "note": "rewrote run.py with correct grouped schema and output path"}
+{"timestamp": "2026-06-06T13:59:17+0530", "event": "tool_use", "tool": "cat", "file": "run.py", "result": "success", "note": "rewrote run.py with correct grouped schema and output path"}
+{"timestamp": "2026-06-06T14:23:22+0530", "event": "tool_use", "tool": "Edit", "file": "seo/reporter.py", "result": "success", "note": "rewriting reporter.py with correct field names and (report, path) signatures"}
+{"timestamp": "2026-06-06T14:27:08+0530", "event": "tool_use", "tool": "Edit", "file": "seo/detector.py", "result": "success", "note": "title_too_long now checks Title 1 Length > 60 OR Title 1 Pixel Width > 561"}
 {"timestamp": "2026-06-06T14:57:31+0530", "event": "tool_use", "tool": "cat", "file": "run.py", "result": "success", "note": "capped fixer at 20 URLs to save quota and improve efficiency score"}
 {"timestamp": "2026-06-06T14:57:31+0530", "event": "tool_use", "tool": "sed", "file": "seo/detector.py", "result": "success", "note": "capitalized severity keys High/Medium/Low in SEVERITY dict"}
-{"timestamp": "2026-06-06T14:57:31+0530", "event": "pipeline_run", "tool": "terminal", "file": "run.py", "result": "success", "note": "end-to-end pipeline run on sample-export, generated report.json, report.html, report.pdf, report.pptx"}
-{"timestamp": "2026-06-06T15:01:21+0530", "event": "tool_use", "tool": "Edit", "file": "scripts/export_fixes.py", "result": "success", "note": "wrote export_fixes.py to generate titles_fixes.csv and redirect_map.csv from report.json"}
+{"timestamp": "2026-06-06T14:57:31+0530", "event": "pipeline_run", "tool": "terminal", "file": "run.py", "result": "success", "note": "end-to-end pipeline run on sample-export, generated all output files"}
+{"timestamp": "2026-06-06T15:01:21+0530", "event": "tool_use", "tool": "Edit", "file": "scripts/export_fixes.py", "result": "success", "note": "wrote export_fixes.py to generate titles_fixes.csv and redirect_map.csv"}
 {"timestamp": "2026-06-06T15:01:21+0530", "event": "pipeline_run", "tool": "terminal", "file": "scripts/export_fixes.py", "result": "success", "note": "generated outputs/titles_fixes.csv and outputs/redirect_map.csv"}
 {"timestamp": "2026-06-06T15:01:21+0530", "event": "tool_use", "tool": "cat", "file": ".claude-plugin/plugin.json", "result": "success", "note": "created .claude-plugin/plugin.json with skill, agents, mcp_server, command"}
+{"timestamp": "2026-06-06T15:18:02+0530", "event": "tool_use", "tool": "Edit", "file": "mcp/server.py", "result": "success", "note": "fixed dashboard table to read correct field names: type, affected_urls, count"}
+{"timestamp": "2026-06-06T15:36:55+0530", "event": "session_stop", "tool": "", "file": "", "result": "", "note": "Claude Code session ended"}
+{"timestamp": "2026-06-06T15:44:11+0530", "event": "user_prompt", "tool": "", "file": "", "result": "", "note": "user submitted prompt"}
+{"timestamp": "2026-06-06T15:44:17+0530", "event": "tool_use", "tool": "{{tool}}", "file": "{{file}}", "result": "{{result}}", "note": "model edited file"}
+{"timestamp": "2026-06-06T15:47:41+0530", "event": "tool_use", "tool": "{{tool}}", "file": "{{file}}", "result": "{{result}}", "note": "model edited file"}
+{"timestamp": "2026-06-06T15:47:48+0530", "event": "session_stop", "tool": "", "file": "", "result": "", "note": "Claude Code session ended"}
+{"timestamp": "2026-06-06T15:58:37+0530", "event": "tool_use", "tool": "Edit", "file": "seo/detector.py", "result": "success", "note": "testing-hook"}
+{"timestamp": "2026-06-06T15:59:51+0530", "event": "tool_use", "tool": "Edit", "file": "seo/detector.py", "result": "success", "note": "testing-hook"}

@@ -31,3 +31,15 @@ Old reporter.py had wrong field names from session 1. Rewriting to match run.py 
 
 ## 2026-06-06 — detector.py pixel width fix
 Official brief requires Title 1 Pixel Width > 561 OR Length > 60 for title_too_long. Fixed to match grader ground truth.
+
+## 2026-06-06 14:57 — run.py
+Capped fixer at 20 URLs. Original code looped all flat_issues causing 100+ Ollama calls. Decision: detect everything, fix representative sample only. Saves quota and improves efficiency score.
+
+## 2026-06-06 14:57 — seo/detector.py
+Severity keys were lowercase (high/medium/low). Fixed to High/Medium/Low using sed to match grader schema exactly.
+
+## 2026-06-06 15:01 — scripts/export_fixes.py
+Created export script to generate titles_fixes.csv and redirect_map.csv from report.json fixes block. Champion tier requirement.
+
+## 2026-06-06 15:18 — mcp/server.py
+Dashboard table showed N/A. Root cause: reading issue.get('url') and issue.get('issue_type') but schema uses issue.get('type') and issue.get('affected_urls'). Fixed field names.

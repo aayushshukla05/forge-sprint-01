@@ -50,3 +50,9 @@ Asked model to replace all functions with correct (report: dict, path: str) sign
 
 ## Prompt 15 — detector.py pixel width
 Added pixel width > 561 check to title_too_long rule alongside length > 60. Handles missing column gracefully. Result: success.
+
+## Prompt 16 — mcp/server.py dashboard fix
+Fix table_rows loop to use correct field names from report.json: type, affected_urls, count. Result: success, dashboard now shows real URLs and issue types.
+
+## Prompt 17 — scripts/export_fixes.py
+Write script to read report.json and export titles_fixes.csv and redirect_map.csv. Result: success.
