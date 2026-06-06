@@ -38,3 +38,6 @@ Built FastAPI dashboard on port 7700 with /, /report, /health. Fixed field keys 
 
 ## Prompt 12 — detector.py fixes
 Fixed: canonical column name, slow_page threshold, indexability filters for title/meta checks, duplicate detection scoped to indexable pages only, thin_content threshold 200, image alt via Content Type. Result: success.
+
+## Prompt 13 — run.py rewrite
+Rewrote run.py via cat to fix: grouped issues schema, correct output path, proper summary structure, fixes block, run_meta with model/calls/duration, calls fixer and reporter. Result: success.

@@ -1,8 +1,23 @@
-import sys
-import os
-import json
-import pandas as pd
-from seo.detector import load_csv, detect
+import sys, os, json, time
+from pathlib import Path
+from seo.detector import load_csv, detect, summarize
+from seo.fixer import rewrite_title, rewrite_meta, get_call_count
+from seo.reporter import to_html, to_pdf, to_pptx
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+OUTPUTS_DIR = PROJECT_ROOT / "outputs"
+
+def group_issues(flat_issues):
+    grouped = {}
+    for i in flat_issues:
+        t = i["issue_type"]
+        if t not in grouped:
+            grouped[t] = {"type": t, "severity": i["severity"], "affected_urls": [], "count": 0, "explanation": ""}
+        grouped[t]["affected_urls"].append(i["url"])
+        grouped[t]["count"] += 1
+    for t, g in grouped.items():
+        g["explanation"] = f"{g['count']} URLs affected by {t}."
+    return list(grouped.values())
 
 def main():
     if len(sys.argv) < 2:
@@ -10,80 +25,69 @@ def main():
         sys.exit(1)
 
     export_dir = sys.argv[1]
+    csv_path = os.path.join(export_dir, "internal_all.csv")
+    start = time.time()
 
-    # Stage 1: Load CSV
-    # Assuming the CSV is located in the export_dir as internal_all.csv
-    csv_path = os.path.join(export_dir, 'internal_all.csv')
-    print(f"Stage 1: Loading CSV from {csv_path}...")
+    print("Stage 1: Loading CSV...")
     try:
         df = load_csv(csv_path)
     except Exception as e:
         print(f"Error loading CSV: {e}")
         sys.exit(1)
 
-    # Stage 2: Detect Issues
+    site = export_dir.rstrip("/\\").split(os.sep)[-1]
+    urls_crawled = len(df)
+    print(f"  Loaded {urls_crawled} URLs")
+
     print("Stage 2: Detecting issues...")
-    issues = detect(df)
+    flat_issues = detect(df)
+    summary = summarize(flat_issues)
+    grouped = group_issues(flat_issues)
+    print(f"  Found {summary['total_issues']} issues")
 
-    # Stage 3: Sort and Recommendations
-    print("Stage 3: Prioritizing issues and generating recommendations...")
-    # Sort by severity: High > Medium > Low
-    severity_map = {"high": 0, "medium": 1, "low": 2}
-    sorted_issues = sorted(issues, key=lambda x: severity_map.get(x['severity'].lower(), 3))
+    print("Stage 3: Prioritizing...")
+    severity_order = {"High": 0, "Medium": 1, "Low": 2}
+    grouped.sort(key=lambda x: severity_order.get(x["severity"], 3))
 
-    # Generate top 5 recommendations based on the most frequent High/Medium issues
-    # For simplicity, we'll take a sample of high-severity issue types
-    high_issues = [i for i in sorted_issues if i['severity'].lower() == 'high']
-    rec_candidates = {}
-    for i in high_issues:
-        rec_candidates[i['issue_type']] = rec_candidates.get(i['issue_type'], 0) + 1
+    print("Stage 4: Generating fixes...")
+    OUTPUTS_DIR.mkdir(exist_ok=True)
+    titles_fixes = []
+    for issue in flat_issues:
+        if issue["issue_type"] in ("missing_title", "title_too_long", "title_too_short"):
+            url = issue["url"]
+            row = df[df["Address"] == url]
+            if not row.empty:
+                old_title = str(row.iloc[0].get("Title 1", "")) if "Title 1" in row.columns else ""
+                new_title = rewrite_title(url, old_title)
+                if new_title:
+                    titles_fixes.append({"url": url, "old": old_title, "new": new_title})
 
-    top_issue_types = sorted(rec_candidates, key=rec_candidates.get, reverse=True)[:5]
-    recommendations = [f"Prioritize fixing {ity} issues" for ity in top_issue_types]
-    if not recommendations:
-        recommendations = ["No high-priority issues found. Perform a general SEO health check."]
+    redirect_map = []
+    for issue in flat_issues:
+        if issue["issue_type"] == "broken_link":
+            redirect_map.append({"from": issue["url"], "to": "", "reason": "404 - needs redirect target"})
 
-    # Stage 4: Save outputs/report.json
-    print("Stage 4: Saving report...")
-    output_dir = os.path.join(export_dir, 'outputs')
-    os.makedirs(output_dir, exist_ok=True)
-    report_path = os.path.join(output_dir, 'report.json')
-
-    # Simple summary
-    summary = {
-        "total_issues": len(issues),
-        "high": len([i for i in issues if i['severity'].lower() == 'high']),
-        "medium": len([i for i in issues if i['severity'].lower() == 'medium']),
-        "low": len([i for i in issues if i['severity'].lower() == 'low']),
-    }
-
+    print("Stage 5: Writing report...")
+    duration = round(time.time() - start, 1)
     report = {
-        "site": export_dir, # Approximation
-        "urls_crawled": len(df),
+        "site": site,
+        "urls_crawled": urls_crawled,
         "summary": summary,
-        "issues": sorted_issues,
-        "fixes": [], # To be filled by fixer agent later
-        "recommendations": recommendations,
-        "run_meta": {
-            "tool": "SEO Command Center",
-            "version": "1.0"
-        }
+        "issues": grouped,
+        "fixes": {"titles": titles_fixes, "redirect_map": redirect_map},
+        "recommendations": [f"Fix {g['count']} {g['type']} issues ({g['severity']} severity)." for g in grouped[:5]],
+        "run_meta": {"model": "gemma4:31b-cloud", "model_calls": get_call_count(), "duration_sec": duration}
     }
 
-    with open(report_path, 'w', encoding='utf-8') as f:
-        json.dump(report, f, indent=4)
+    report_path = OUTPUTS_DIR / "report.json"
+    with open(report_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2)
+    print(f"  Saved {report_path}")
 
-    # Stage 5: Print summary to terminal
-    print("\n--- SEO Audit Summary ---")
-    print(f"URLs Crawled: {report['urls_crawled']}")
-    print(f"Total Issues Found: {summary['total_issues']}")
-    print(f"  - High: {summary['high']}")
-    print(f"  - Medium: {summary['medium']}")
-    print(f"  - Low: {summary['low']}")
-    print("\nTop Recommendations:")
-    for rec in recommendations:
-        print(f"- {rec}")
-    print(f"\nReport saved to: {report_path}")
+    to_html(report, str(OUTPUTS_DIR / "report.html"))
+    to_pdf(report, str(OUTPUTS_DIR / "report.pdf"))
+    to_pptx(report, str(OUTPUTS_DIR / "report.pptx"))
+    print("Done.")
 
 if __name__ == "__main__":
     main()

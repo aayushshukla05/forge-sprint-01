@@ -38,3 +38,10 @@ Model: gemma4:31b-cloud via ollama launch claude
 - Fixed thin_content to < 200 words
 - Fixed missing_image_alt to check Content Type contains 'image'
 - Tools used: Edit
+
+### Step 13: run.py rewrite
+- Rewrote via cat command directly
+- Fixed grouped issues schema with affected_urls, count, explanation
+- Fixed output path to PROJECT_ROOT/outputs/
+- Fixed summary, fixes, run_meta fields to match brief schema
+- Tools used: cat (terminal)
