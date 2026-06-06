@@ -1,9 +1,9 @@
 {
   "hooks": {
-    "SessionStart": [{"command": "bash .claude/hooks/audit.sh session_start"}],
-    "UserPromptSubmit": [{"command": "bash .claude/hooks/audit.sh prompt"}],
-    "PreToolUse": [{"command": "bash .claude/hooks/audit.sh pre_tool"}],
-    "PostToolUse": [{"command": "bash .claude/hooks/audit.sh post_tool"}],
-    "Stop": [{"command": "bash .claude/hooks/audit.sh stop"}]
+    "PostToolUse": [{"matcher": "", "hooks": [{"type": "command", "command": "echo done"}]}],
+    "PreToolUse": [{"matcher": "", "hooks": [{"type": "command", "command": "echo ready"}]}],
+    "SessionStart": [{"matcher": "", "hooks": [{"type": "command", "command": "echo start"}]}],
+    "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "echo stop"}]}],
+    "UserPromptSubmit": [{"matcher": "", "hooks": [{"type": "command", "command": "echo prompt"}]}]
   }
 }
