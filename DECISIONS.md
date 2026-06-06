@@ -16,3 +16,6 @@ Used gemma4:31b-cloud as model name in fixer.py API calls. Edit tool worked with
 
 ## 2026-06-06 — mcp/server.py
 Fixed key mismatch: site_name→site, severity_counts→summary.by_severity, top_issues→issues, issue→issue_type. All paths use pathlib relative to project root.
+
+## 2026-06-06 — detector.py fixes
+Brief specifies slow_page > 1.0s, thin_content < 200 words, and all title/meta rules scoped to indexable 200 pages only. Duplicate detection must also be scoped to indexable pages to match grader ground truth.

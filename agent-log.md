@@ -30,3 +30,11 @@ Model: gemma4:31b-cloud via ollama launch claude
 - Dashboard reads report.json dynamically with correct schema keys
 - Graceful empty state if report not yet generated
 - Tools used: Edit
+
+### Step 12: detector.py fixes
+- Fixed col_canonical to 'Canonical Link Element 1'
+- Fixed slow_page threshold to > 1.0 seconds
+- Fixed duplicate detection to use indexable_df (status 200 + Indexable only)
+- Fixed thin_content to < 200 words
+- Fixed missing_image_alt to check Content Type contains 'image'
+- Tools used: Edit

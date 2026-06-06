@@ -35,3 +35,6 @@ Result: Written successfully. Still gave summary despite instruction.
 
 ## Prompt 11 — mcp/server.py
 Built FastAPI dashboard on port 7700 with /, /report, /health. Fixed field keys to match report.json schema. Result: success.
+
+## Prompt 12 — detector.py fixes
+Fixed: canonical column name, slow_page threshold, indexability filters for title/meta checks, duplicate detection scoped to indexable pages only, thin_content threshold 200, image alt via Content Type. Result: success.

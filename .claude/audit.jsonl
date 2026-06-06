@@ -7,3 +7,4 @@
 {"timestamp": "2026-06-06T13:08:22+0530", "event": "tool_use", "tool": "Edit", "file": ".claude/settings.json", "result": "success", "note": "fixed hooks format, backfilled audit log"}
 {"timestamp": "2026-06-06T13:12:07+0530", "event": "tool_use", "tool": "Edit", "file": "seo/reporter.py", "result": "success", "note": "wrote to_html, to_pdf, to_pptx output generators"}
 {"timestamp": "2026-06-06T13:30:00+0530", "event": "tool_use", "tool": "Edit", "file": "mcp/server.py", "result": "success", "note": "FastAPI dashboard on port 7700, fixed schema key names"}
+{"timestamp": "2026-06-06T14:00:00+0530", "event": "tool_use", "tool": "Edit", "file": "seo/detector.py", "result": "success", "note": "fixed canonical col, slow_page threshold, indexability filters, duplicate scoping"}
