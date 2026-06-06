@@ -10,3 +10,6 @@
 - Used ollama launch claude instead of manual env vars — fixes context window issues
 - Write tool fails on Ollama 0.30.5, Edit tool works — prompt model to use Edit only
 - Committed after each file to maintain incremental git history
+
+## 2026-06-06 — fixer.py
+Used gemma4:31b-cloud as model name in fixer.py API calls. Edit tool worked without issues.

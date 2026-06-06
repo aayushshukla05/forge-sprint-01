@@ -24,3 +24,7 @@ Result: Worked after switching from Write tool to Edit tool.
 ## Prompt 2 — run.py
 Asked gemma4:31b-cloud to write 5-stage pipeline accepting export_dir as sys.argv[1].
 Result: Written successfully.
+
+## Prompt 3 — fixer.py
+Asked gemma4:31b-cloud to write rewrite_title, rewrite_meta, get_call_count using Ollama API.
+Result: Written successfully using Edit tool.

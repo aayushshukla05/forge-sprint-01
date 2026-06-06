@@ -11,3 +11,10 @@ Model: gemma4:31b-cloud via ollama launch claude
 - Prompted model to write 5-stage pipeline
 - Accepts export_dir as sys.argv[1]
 - Saves outputs/report.json
+
+### Step 3: fixer.py
+- Prompted model to write Ollama API caller for title/meta rewrites
+- rewrite_title validates under 60 chars, retries once
+- rewrite_meta validates under 155 chars, retries once
+- get_call_count tracks total API calls
+- Model used Edit tool successfully
