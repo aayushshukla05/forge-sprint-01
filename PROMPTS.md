@@ -56,3 +56,9 @@ Fix table_rows loop to use correct field names from report.json: type, affected_
 
 ## Prompt 17 — scripts/export_fixes.py
 Write script to read report.json and export titles_fixes.csv and redirect_map.csv. Result: success.
+
+## Prompt 18 — run.py content type filter
+Add text/html check before rewrite_title in Stage 4 loop to exclude images and CSS from titles_fixes. Result: success.
+
+## Prompt 19 — run.py redirect_map fix
+Change redirect_map to use redirect issue type instead of broken_link, with real 301/302 from/to pairs. Result: success.

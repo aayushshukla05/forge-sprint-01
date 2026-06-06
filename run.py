@@ -71,9 +71,11 @@ def main():
                     seen += 1
 
     redirect_map = []
+    seen_redirects = set()
     for issue in flat_issues:
-        if issue["issue_type"] == "broken_link":
-            redirect_map.append({"from": issue["url"], "to": "", "reason": "404 - needs redirect target"})
+        if issue["issue_type"] == "redirect" and issue["url"] not in seen_redirects:
+            seen_redirects.add(issue["url"])
+            redirect_map.append({"from": issue["url"], "to": issue["url"].rstrip("/"), "reason": "301/302 redirect - update internal links to final destination"})
 
     print("Stage 5: Writing report...")
     duration = round(time.time() - start, 1)

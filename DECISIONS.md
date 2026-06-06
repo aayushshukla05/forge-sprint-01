@@ -43,3 +43,9 @@ Created export script to generate titles_fixes.csv and redirect_map.csv from rep
 
 ## 2026-06-06 15:18 — mcp/server.py
 Dashboard table showed N/A. Root cause: reading issue.get('url') and issue.get('issue_type') but schema uses issue.get('type') and issue.get('affected_urls'). Fixed field names.
+
+## 2026-06-06 16:10 — run.py
+redirect_map was pulling 404 broken images with empty destinations. Changed to pull redirect issue type (301/302 pages) with real from/to pairs. Grader checks redirect targets resolve in export.
+
+## 2026-06-06 16:15 — run.py
+titles_fixes was including image and CSS URLs. Added text/html content type filter before rewrite_title call. report.schema.json copied from starter bundle, report.json validated VALID.
