@@ -28,3 +28,7 @@ Result: Written successfully.
 ## Prompt 3 — fixer.py
 Asked gemma4:31b-cloud to write rewrite_title, rewrite_meta, get_call_count using Ollama API.
 Result: Written successfully using Edit tool.
+
+## Prompt 4 — reporter.py
+Asked gemma4:31b-cloud to write to_html, to_pdf, to_pptx functions.
+Result: Written successfully. Still gave summary despite instruction.

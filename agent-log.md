@@ -18,3 +18,9 @@ Model: gemma4:31b-cloud via ollama launch claude
 - rewrite_meta validates under 155 chars, retries once
 - get_call_count tracks total API calls
 - Model used Edit tool successfully
+
+### Step 4: reporter.py
+- to_html writes outputs/report.html with issues table and recommendations
+- to_pdf uses fpdf2
+- to_pptx uses python-pptx with 4 slides
+- Model used Edit tool successfully
