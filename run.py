@@ -79,13 +79,37 @@ def main():
 
     print("Stage 5: Writing report...")
     duration = round(time.time() - start, 1)
+    # Actionable recommendations mapping
+    RECS = {
+        "missing_title": "{} pages are missing title tags - add unique, descriptive titles under 60 characters",
+        "duplicate_title": "{} pages share duplicate titles - each page needs a unique title tag",
+        "broken_link": "{} broken links (4xx) found - redirect or remove these URLs to avoid crawl waste",
+        "title_too_long": "{} titles exceed 60 chars or 561px - shorten to improve SERP display",
+        "title_too_short": "{} titles under 30 chars - expand to be more descriptive",
+        "missing_meta_description": "{} pages missing meta descriptions - add unique summaries under 155 chars",
+        "duplicate_meta_description": "{} pages share meta descriptions - write unique ones per page",
+        "meta_description_too_long": "{} meta descriptions exceed 155 chars - shorten to avoid truncation",
+        "missing_h1": "{} pages missing H1 tags - add one clear H1 per page",
+        "duplicate_h1": "{} pages share duplicate H1s - make each H1 unique",
+        "redirect": "{} redirect chains found - update internal links to point directly to final URLs",
+        "redirect_chain": "{} redirect chains - fix to reduce crawl depth",
+        "redirect_loop": "{} redirect loops detected - resolve immediately",
+        "missing_image_alt": "{} images missing alt text - add descriptive alt attributes for accessibility and SEO",
+        "orphan_page": "{} orphan pages with no inlinks - add internal links to make them discoverable",
+        "non_indexable_but_linked": "{} non-indexable pages have inlinks - remove links or fix indexability",
+        "canonical_mismatch": "{} canonical mismatches - align canonical tags with the intended URL",
+        "thin_content": "{} pages under 200 words - expand content or consolidate with stronger pages",
+        "slow_page": "{} pages respond slowly - investigate server or asset performance",
+        "server_error": "{} server errors (5xx) - fix immediately to prevent crawl and ranking loss",
+    }
+
     report = {
         "site": site,
         "urls_crawled": urls_crawled,
         "summary": summary,
         "issues": grouped,
         "fixes": {"titles": titles_fixes, "redirect_map": redirect_map},
-        "recommendations": [f"Fix {g['count']} {g['type']} issues ({g['severity']} severity)." for g in grouped[:5]],
+        "recommendations": [RECS.get(g['type'], f"Fix {g['count']} {g['type']} issues").format(g['count']) for g in grouped],
         "run_meta": {"model": "gemma4:31b-cloud", "model_calls": get_call_count(), "duration_sec": duration}
     }
 
