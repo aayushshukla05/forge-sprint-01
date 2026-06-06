@@ -12,3 +12,4 @@
 {"timestamp": "2026-06-06T14:15:00+0530", "event": "tool_use", "tool": "cat", "file": "run.py", "result": "success", "note": "rewrote run.py with correct grouped schema and output path"}
 {"timestamp": "2026-06-06T14:20:00+0530", "event": "tool_use", "tool": "Edit", "file": "seo/reporter.py", "result": "in_progress", "note": "rewriting reporter.py with correct field names: site, summary.by_severity, issues"}
 {"timestamp": "2026-06-06T14:25:00+0530", "event": "tool_use", "tool": "Edit", "file": "seo/reporter.py", "result": "success", "note": "reporter.py rewritten with correct field names and (report, path) signatures"}
+{"timestamp": "2026-06-06T14:30:00+0530", "event": "tool_use", "tool": "Edit", "file": "seo/detector.py", "result": "success", "note": "title_too_long now checks Title 1 Length > 60 OR Title 1 Pixel Width > 561"}

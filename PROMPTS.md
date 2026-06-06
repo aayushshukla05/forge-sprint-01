@@ -47,3 +47,6 @@ Rewrote run.py via cat to fix: grouped issues schema, correct output path, prope
 
 ## Prompt 14 — reporter.py rewrite
 Asked model to replace all functions with correct (report: dict, path: str) signatures and correct field names. No report_dict, no site_name, no severity_counts, no top_issues. Result: in progress.
+
+## Prompt 15 — detector.py pixel width
+Added pixel width > 561 check to title_too_long rule alongside length > 60. Handles missing column gracefully. Result: success.

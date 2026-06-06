@@ -82,7 +82,7 @@ def detect(df: pd.DataFrame) -> list:
             ("server_error", isinstance(status, (int, float)) and status >= 500, f"Server error with status {status}"),
             ("redirect_chain", row.get(col_chain) if col_chain in df.columns else False, "Page is part of a redirect chain"),
             ("redirect_loop", row.get(col_loop) if col_loop in df.columns else False, "Page is in a redirect loop"),
-            ("title_too_long", len(title) > 60, f"Title length ({len(title)}) exceeds 60 characters"),
+            ("title_too_long", len(title) > 60 or float(row.get('Title 1 Pixel Width', 0) if pd.notnull(row.get('Title 1 Pixel Width')) else 0) > 561, f"Title length ({len(title)}) or width ({row.get('Title 1 Pixel Width', 0)}) exceeds limits"),
             ("missing_meta_description", (indexability == 'Indexable' and status == 200) and not meta, "Meta description is missing"),
             ("duplicate_meta_description", (indexability == 'Indexable' and status == 200) and (meta and meta in dup_metas), "Duplicate meta description detected"),
             ("missing_h1", not h1, "H1 tag is missing"),
