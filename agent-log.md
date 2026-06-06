@@ -24,3 +24,9 @@ Model: gemma4:31b-cloud via ollama launch claude
 - to_pdf uses fpdf2
 - to_pptx uses python-pptx with 4 slides
 - Model used Edit tool successfully
+
+### Step 11: mcp/server.py
+- FastAPI server on port 7700 with /, /report, /health
+- Dashboard reads report.json dynamically with correct schema keys
+- Graceful empty state if report not yet generated
+- Tools used: Edit

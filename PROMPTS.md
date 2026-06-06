@@ -32,3 +32,6 @@ Result: Written successfully using Edit tool.
 ## Prompt 4 — reporter.py
 Asked gemma4:31b-cloud to write to_html, to_pdf, to_pptx functions.
 Result: Written successfully. Still gave summary despite instruction.
+
+## Prompt 11 — mcp/server.py
+Built FastAPI dashboard on port 7700 with /, /report, /health. Fixed field keys to match report.json schema. Result: success.

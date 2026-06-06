@@ -13,3 +13,6 @@
 
 ## 2026-06-06 — fixer.py
 Used gemma4:31b-cloud as model name in fixer.py API calls. Edit tool worked without issues.
+
+## 2026-06-06 — mcp/server.py
+Fixed key mismatch: site_name→site, severity_counts→summary.by_severity, top_issues→issues, issue→issue_type. All paths use pathlib relative to project root.
