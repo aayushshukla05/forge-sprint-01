@@ -100,7 +100,7 @@ async def root():
                     </div>
                 </div>
 
-                <h2>Top 20 Issues</h2>
+                <h2>Top Issues</h2>
                 <table>
                     <thead>
                         <tr>
