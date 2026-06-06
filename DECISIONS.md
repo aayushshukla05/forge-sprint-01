@@ -25,3 +25,6 @@ Used cat instead of Claude Code model to rewrite run.py — faster and more reli
 
 ## 2026-06-06 — run.py rewrite
 Used cat instead of Claude Code model to rewrite run.py — faster and more reliable for full file rewrites. Grouped issues by type into affected_urls[] to match grader schema.
+
+## 2026-06-06 — reporter.py rewrite
+Old reporter.py had wrong field names from session 1. Rewriting to match run.py which calls to_html(report, path). Correct keys: report["site"], report["summary"]["by_severity"], report["issues"][].type/severity/count/explanation.

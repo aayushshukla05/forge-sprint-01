@@ -52,3 +52,9 @@ Model: gemma4:31b-cloud via ollama launch claude
 - Fixed output path to PROJECT_ROOT/outputs/
 - Fixed summary, fixes, run_meta fields to match brief schema
 - Tools used: cat (terminal)
+
+### Step 14: reporter.py rewrite
+- Old version had wrong field names: site_name, severity_counts, top_issues, report_dict
+- Rewriting with correct signatures: to_html(report, path), to_pdf(report, path), to_pptx(report, path)
+- Correct fields: report["site"], report["summary"]["by_severity"], report["issues"]
+- Tools used: Edit

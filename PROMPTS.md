@@ -44,3 +44,6 @@ Rewrote run.py via cat to fix: grouped issues schema, correct output path, prope
 
 ## Prompt 13 — run.py rewrite
 Rewrote run.py via cat to fix: grouped issues schema, correct output path, proper summary structure, fixes block, run_meta with model/calls/duration, calls fixer and reporter. Result: success.
+
+## Prompt 14 — reporter.py rewrite
+Asked model to replace all functions with correct (report: dict, path: str) signatures and correct field names. No report_dict, no site_name, no severity_counts, no top_issues. Result: in progress.
