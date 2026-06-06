@@ -45,3 +45,10 @@ Model: gemma4:31b-cloud via ollama launch claude
 - Fixed output path to PROJECT_ROOT/outputs/
 - Fixed summary, fixes, run_meta fields to match brief schema
 - Tools used: cat (terminal)
+
+### Step 13: run.py rewrite
+- Rewrote via cat command directly
+- Fixed grouped issues schema with affected_urls, count, explanation
+- Fixed output path to PROJECT_ROOT/outputs/
+- Fixed summary, fixes, run_meta fields to match brief schema
+- Tools used: cat (terminal)

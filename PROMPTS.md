@@ -41,3 +41,6 @@ Fixed: canonical column name, slow_page threshold, indexability filters for titl
 
 ## Prompt 13 — run.py rewrite
 Rewrote run.py via cat to fix: grouped issues schema, correct output path, proper summary structure, fixes block, run_meta with model/calls/duration, calls fixer and reporter. Result: success.
+
+## Prompt 13 — run.py rewrite
+Rewrote run.py via cat to fix: grouped issues schema, correct output path, proper summary structure, fixes block, run_meta with model/calls/duration, calls fixer and reporter. Result: success.

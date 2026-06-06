@@ -22,3 +22,6 @@ Brief specifies slow_page > 1.0s, thin_content < 200 words, and all title/meta r
 
 ## 2026-06-06 — run.py rewrite
 Used cat instead of Claude Code model to rewrite run.py — faster and more reliable for full file rewrites. Grouped issues by type into affected_urls[] to match grader schema.
+
+## 2026-06-06 — run.py rewrite
+Used cat instead of Claude Code model to rewrite run.py — faster and more reliable for full file rewrites. Grouped issues by type into affected_urls[] to match grader schema.
