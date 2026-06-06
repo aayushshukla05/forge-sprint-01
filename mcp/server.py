@@ -41,12 +41,14 @@ async def root():
     # Build issues table rows
     table_rows = ""
     for issue in top_issues:
+        urls = issue.get('affected_urls', [])
+        first_url = urls[0] if urls and isinstance(urls, list) else 'N/A'
         table_rows += f"""
         <tr>
-            <td>{issue.get('url', 'N/A')}</td>
-            <td>{issue.get('issue_type', 'N/A')}</td>
+            <td>{first_url}</td>
+            <td>{issue.get('type', 'N/A')}</td>
             <td>{issue.get('severity', 'N/A')}</td>
-            <td>{issue.get('detail', 'N/A')}</td>
+            <td>{issue.get('count', 'N/A')}</td>
         </tr>
         """
 
