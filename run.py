@@ -49,10 +49,14 @@ def main():
     severity_order = {"High": 0, "Medium": 1, "Low": 2}
     grouped.sort(key=lambda x: severity_order.get(x["severity"], 3))
 
-    print("Stage 4: Generating fixes...")
+    print("Stage 4: Generating fixes (capped at 20 URLs)...")
     OUTPUTS_DIR.mkdir(exist_ok=True)
+
     titles_fixes = []
+    seen = 0
     for issue in flat_issues:
+        if seen >= 20:
+            break
         if issue["issue_type"] in ("missing_title", "title_too_long", "title_too_short"):
             url = issue["url"]
             row = df[df["Address"] == url]
@@ -61,6 +65,7 @@ def main():
                 new_title = rewrite_title(url, old_title)
                 if new_title:
                     titles_fixes.append({"url": url, "old": old_title, "new": new_title})
+                    seen += 1
 
     redirect_map = []
     for issue in flat_issues:

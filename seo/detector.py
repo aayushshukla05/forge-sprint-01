@@ -4,16 +4,16 @@ from collections import defaultdict
 
 # Severity Mapping from CLAUDE.md
 SEVERITY = {
-    "high": [
+    "High": [
         "missing_title", "duplicate_title", "broken_link",
         "server_error", "redirect_chain", "redirect_loop"
     ],
-    "medium": [
+    "Medium": [
         "title_too_long", "missing_meta_description", "duplicate_meta_description",
         "missing_h1", "redirect", "missing_image_alt",
         "orphan_page", "non_indexable_but_linked", "canonical_mismatch"
     ],
-    "low": [
+    "Low": [
         "title_too_short", "meta_description_too_long", "duplicate_h1",
         "thin_content", "slow_page"
     ]
